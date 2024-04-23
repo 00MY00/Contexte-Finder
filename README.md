@@ -27,8 +27,8 @@ Pour mettre en place le projet, suivez ces étapes :
 1. **Installer PIP pour Windows** : Assurez-vous que PIP est installé sur votre machine pour gérer les paquets Python.
 2. **Clonage du projet** :
     ```bash
-    git clone <url_to_repository>
-    cd <repository_name>
+    git clone 'https://github.com/00MY00/Contexte-Finder'
+    cd '.\Contexte-Finder'
     ```
 3. **Installation de Docker** :
     - Exécutez le script Powershell `Installe_Docker_app.ps1` pour configurer les bases de données nécessaires via Docker.
@@ -45,9 +45,9 @@ Pour mettre en place le projet, suivez ces étapes :
 - **Ajouter des documents** : Placez les fichiers texte dans le dossier `DOCs`.
 - **Exécuter le script principal** :
     ```bash
-    python Main.py
+    python '.\Main.py'
+    python '.\Prompt_Doc_Finder.py'
     ```
-- **Trouver des documents** :
     - Lancez `Prompt_Doc_Finder.py` pour commencer à rechercher des documents.
     - Utilisez la commande `Help` pour obtenir des informations sur les commandes disponibles.
 
@@ -67,4 +67,4 @@ Les contributions à ce projet sont les bienvenues. Veuillez suivre les bonnes p
 
 ## Licence
 
-Ce projet est distribué sous licence MIT. Voir le fichier `LICENSE` pour plus de détails.
+Ce projet est distribué sous licence (LGPL). Voir le fichier `LICENSE` pour plus de détails.
