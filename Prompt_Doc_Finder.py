@@ -123,21 +123,6 @@ while True:
     elif commande.lower() == 'clear':
         os.system('cls')    # Clear terminal
     elif commande.lower() == 'conf rld':
-        # try:
-        #     print("Début de la mise à jour des configurations...")
-        #     try:
-        #         configs = Extract_Configs(ConfFilePath)     # Récupération config
-        #     except Exception as e:
-        #         print(f"Erreur veriffier l'existance du fichier {ConfFilePath} Info : {e}")
-        #     # Vérification et mise à jour des variables globales
-        #     for cle, nouvelle_valeur in configs.items():
-        #         if cle in globals() and globals()[cle] != nouvelle_valeur:
-        #             print(f"La valeur de '{cle}' va changer de {globals()[cle]} à {nouvelle_valeur}.")
-        #         globals()[cle] = nouvelle_valeur  # Mise à jour ou création de la variable globale
-        #     # Message de confirmation de la mise à jour
-        #     print("Mise à jour des configurations terminée!")
-        # except Exception as e:
-        #         print(f"Erreur lors de la mise a joure de fichier configs")
         Conf_Updat_Manualy(ConfFilePath)
     elif commande.lower() == 'start vdb':
         print("Rechargement du programme...")
