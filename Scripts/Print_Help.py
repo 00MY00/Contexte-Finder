@@ -1,5 +1,5 @@
 def Print_Help():
-    width = 90
+    width = 95
     line = "═" * (width - 2)
     print("╔" + line + "╗")
 
