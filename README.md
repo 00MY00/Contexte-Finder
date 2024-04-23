@@ -4,6 +4,8 @@
 
 # Project Vector Finder
 
+![PowerShell](https://img.shields.io/badge/PowerShell-5.1+-blue.svg)
+![Windows](https://img.shields.io/badge/Windows-compatible-brightgreen.svg)
 ![Python](https://img.shields.io/badge/Python-3.8+-blue.svg)
 ![Docker](https://img.shields.io/badge/docker-enabled-blue.svg)
 ![Milvus](https://img.shields.io/badge/Milvus-v2.4.0--rc.1-blue.svg)
