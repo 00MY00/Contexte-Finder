@@ -16,6 +16,7 @@ def Print_Help():
         "reload     - Recharge le programme.",
         "cls        - Netoy l'affichage.",
         "clear      - Netoy l'affichage.",
+        "conf rld   - Recharge les config du fichier config.",
         "show coll  - Affiche les collections de Milvus.",
         "show fvdb  - Affiche les fichiers dans Milvus.",
         "show inf   - Affiche les information et le message de bienvenu du démarage.",

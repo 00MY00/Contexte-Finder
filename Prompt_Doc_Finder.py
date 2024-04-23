@@ -56,6 +56,7 @@ from Print_Help import Print_Help
 from Print_Info import Print_Info
 from Aggregate_Data_to_JSON_Format import Aggregate_Data_to_JSON_Format
 from Fiend_Nearst import Fiend_Nearst
+from Conf_Updat_Manualy import Conf_Updat_Manualy
 ####################################################################################
 
 # Variable
@@ -121,6 +122,23 @@ while True:
         os.system('cls')    # Clear terminal
     elif commande.lower() == 'clear':
         os.system('cls')    # Clear terminal
+    elif commande.lower() == 'conf rld':
+        # try:
+        #     print("Début de la mise à jour des configurations...")
+        #     try:
+        #         configs = Extract_Configs(ConfFilePath)     # Récupération config
+        #     except Exception as e:
+        #         print(f"Erreur veriffier l'existance du fichier {ConfFilePath} Info : {e}")
+        #     # Vérification et mise à jour des variables globales
+        #     for cle, nouvelle_valeur in configs.items():
+        #         if cle in globals() and globals()[cle] != nouvelle_valeur:
+        #             print(f"La valeur de '{cle}' va changer de {globals()[cle]} à {nouvelle_valeur}.")
+        #         globals()[cle] = nouvelle_valeur  # Mise à jour ou création de la variable globale
+        #     # Message de confirmation de la mise à jour
+        #     print("Mise à jour des configurations terminée!")
+        # except Exception as e:
+        #         print(f"Erreur lors de la mise a joure de fichier configs")
+        Conf_Updat_Manualy(ConfFilePath)
     elif commande.lower() == 'start vdb':
         print("Rechargement du programme...")
         command = [sys.executable, "main.py"]
