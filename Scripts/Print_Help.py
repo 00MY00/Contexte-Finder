@@ -20,7 +20,8 @@ def Print_Help():
         "show coll  - Affiche les collections de Milvus.",
         "show fvdb  - Affiche les fichiers dans Milvus.",
         "show inf   - Affiche les information et le message de bienvenu du démarage.",
-        "start vdb  - Execute les scripts de création de DB vectoriel. (Fermera le programme)"
+        "start vdb  - Execute les scripts de création de DB vectoriel. (Fermera le programme)",
+        "Entrée le texte de votre choi dans le prompt pour le quel vous vouler trouver un fichier "
     ]
 
     for command in commands:
