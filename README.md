@@ -55,11 +55,12 @@ Pour mettre en place le projet, suivez ces étapes :
 
 Le projet permet une personnalisation poussée grâce aux paramètres suivants :
 
-- `NB_vecteur_Proche` : Nombre de vecteurs à considérer lors de la recherche.
-- `Precision` : Ajuste la précision de la recherche, influençant la vitesse et l'efficacité.
-- `FirstContextTrigger` : Mots clés pour l'extraction de contexte dans les textes.
-- `ResumeWordSize` : Taille minimale des mots à considérer pour le contexte.
-- `MaxVarcharLength` : Longueur maximale des champs de texte dans Milvus.
+- `NB_vecteur_Proche`           : Nombre de vecteurs à considérer lors de la recherche.
+- `Precision`                   : Ajuste la précision de la recherche, influençant la vitesse et l'efficacité.
+- `FirstContextTrigger`         : Mots clés pour l'extraction de contexte dans les textes.
+- `ResumeWordSize`              : Taille minimale des mots à considérer pour le contexte.
+- `MaxVarcharLength`            : Longueur maximale des champs de texte dans Milvus.
+- `MaxReturnResultShowFilsVDB`  : Nombre de fichier a afficher avec la commande "show fvdb"
 
 ## Contribution
 

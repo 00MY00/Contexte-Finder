@@ -41,7 +41,7 @@ sys.path.append(r'.\Scripts')
 from extract_values_from_json import extract_values_from_json
 from Find_Collection import Find_Collection
 from Creat_Dictionair import Creat_Dictionair
-from Creat_Tables import Creat_Tables
+#from Creat_Tables import Creat_Tables
 from Extract_Configs import Extract_Configs
 from Extract_Context import Extract_Context
 from Identifi_Langue import Identifi_Langue
@@ -115,7 +115,7 @@ while True:
     elif commande.lower() == 'show coll':
         Print_Milvus_Collections(CollectionName)
     elif commande.lower() == 'show fvdb':
-        Print_Files_VDB(DBTabls, CollectionName)
+        Print_Files_VDB(CollectionName, int(MaxReturnResultShowFilsVDB))
     elif commande.lower() == 'show inf':
         Print_Info(UserNameLocal, InstallPacketAtStart)
     elif commande.lower() == 'cls':
@@ -152,5 +152,5 @@ while True:
                 print(f"Erreur lors de la recherche des distances proches : {e}")
 
             
-            print(ResultDistanceCheque)
+            #print(ResultDistanceCheque)
 

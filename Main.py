@@ -136,12 +136,12 @@ for filepath in fichiers:
 
 
 
-os.system('cls')    #Clear terminal
+#os.system('cls')    #Clear terminal
 print("Indexation . . .")
 print("FieldName : ", FieldName)
 Creat_Index(CollectionName, FieldName, index_params)
     
-#os.system('cls')    # Clear terminal
+os.system('cls')    # Clear terminal
 print("Chargement des données dans la DB vectoriel terminer !")
 
 
