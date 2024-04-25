@@ -123,7 +123,12 @@ while True:
     elif commande.lower() == 'clear':
         os.system('cls')    # Clear terminal
     elif commande.lower() == 'conf rld':
-        Conf_Updat_Manualy(ConfFilePath)
+        ### Récupération config
+        newConfigs = Extract_Configs(ConfFilePath)
+        ### Définir chaque clé comme une variable globale
+        for cle, valeur in newConfigs.items():
+            globals()[cle] = valeur
+        Conf_Updat_Manualy(configs, newConfigs)
     elif commande.lower() == 'start vdb':
         print("Rechargement du programme...")
         command = [sys.executable, "main.py"]
@@ -147,7 +152,7 @@ while True:
                 print(f"Erreur lors de l'agrégation des données au format JSON : {e}")
 
             try:
-                ResultDistanceCheque = Fiend_Nearst(int(DistanceMin), int(DistanceMax), int(NB_Resultat_Afficher), DatasJSON)
+                ResultDistanceCheque = Fiend_Nearst(int(DistanceMin), int(DistanceMax), int(NB_Resultat_Afficher), DatasJSON, FullTextBrut)
             except Exception as e:
                 print(f"Erreur lors de la recherche des distances proches : {e}")
 
