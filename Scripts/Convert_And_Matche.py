@@ -1,24 +1,34 @@
-import torch
+import gensim.downloader as api
 import json
 import numpy as np
-from transformers import BertModel, BertTokenizer
 from pymilvus import Collection, connections
 import logging
 
 # Configurer le niveau de log pour ignorer les avertissements
-logging.getLogger("transformers").setLevel(logging.ERROR)
+logging.getLogger().setLevel(logging.ERROR)
 
-# Initialisation du tokenizer et du modèle BERT
-tokenizer = BertTokenizer.from_pretrained('bert-base-uncased')
-model = BertModel.from_pretrained('bert-base-uncased')
-model.eval()
+
+
+# Vérifie si le modèle est déjà chargé et le charge si nécessaire
+global model_w2v  # Déclare model_w2v comme variable globale
+try:
+    model_w2v
+except NameError:  # Si model_w2v n'est pas défini, le charger
+    from gensim import downloader as api
+    model_w2v = api.load('word2vec-google-news-300')
+    print("Modèle chargé avec succès.")
+else:
+    print("Modèle déjà chargé.")
+
+
 
 def vectorize_word(word):
-    """ Vectorise un mot et retourne son vecteur. """
-    inputs = tokenizer(word, return_tensors="pt", padding=True, truncation=True, max_length=512)
-    with torch.no_grad():
-        outputs = model(**inputs)
-    word_vector = outputs.last_hidden_state.mean(dim=1).squeeze().numpy()
+    """ Vectorise un mot en utilisant Word2Vec et retourne son vecteur. """
+    try:
+        word_vector = model_w2v[word]
+    except KeyError:
+        # Vecteur nul si le mot n'est pas dans le vocabulaire
+        word_vector = np.zeros(model_w2v.vector_size)
     return word_vector.tolist()
 
 def convert_numpy(obj):
@@ -44,23 +54,22 @@ def search_and_fetch_details(collection_name, query_vector, vector_field_names, 
     for field in vector_field_names:
         search_result = collection.search([query_vector], field, search_params, limit=top_k, output_fields=["*"])
         formatted_result = []
-        distances = []  # Liste pour collecter les distances de chaque hit
+        distances = []
         for hit in search_result[0]:
-            entity_details = collection.query(expr=f"ID_Unique == '{hit.id}'", output_fields=["*"])
+            # Modification ici pour traiter l'ID en tant qu'entier
+            entity_details = collection.query(expr=f"ID_Unique == {hit.id}", output_fields=["*"])
             entity_data = {'Distance': convert_numpy(hit.distance)}
-            distances.append(entity_data['Distance'])  # Ajout de la distance à la liste des distances
+            distances.append(entity_data['Distance'])
             if entity_details:
                 detail = entity_details[0]
                 entity_data.update({key: convert_numpy(value) for key, value in detail.items()})
             formatted_result.append(entity_data)
         results[field] = formatted_result
-        results[f'Distances_{field}'] = distances  # Ajouter les distances collectées sous une clé spécifique
+        results[f'Distances_{field}'] = distances
 
     return json.dumps(results, indent=4)
 
-
 def Convert_And_Matche(text, collection_name, vector_field_names, NB_vecteur_Proche, Precision):
-    """ Découpe, vectorise et recherche les vecteurs proches pour chaque mot dans un texte sur plusieurs champs spécifiés et retourne les résultats en JSON. """
     words = text.split()
     word_vectors = [vectorize_word(word) for word in words]
     search_results = {}
