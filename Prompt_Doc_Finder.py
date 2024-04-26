@@ -57,6 +57,7 @@ from Print_Info import Print_Info
 from Aggregate_Data_to_JSON_Format import Aggregate_Data_to_JSON_Format
 from Fiend_Nearst import Fiend_Nearst
 from Conf_Updat_Manualy import Conf_Updat_Manualy
+from Open_Congigs_File import Open_Congigs_File
 ####################################################################################
 
 # Variable
@@ -122,6 +123,9 @@ while True:
         os.system('cls')    # Clear terminal
     elif commande.lower() == 'clear':
         os.system('cls')    # Clear terminal
+    elif commande.lower() == 'conf':
+        Open_Congigs_File(ConfFilePath)
+        print("Ouverture du fichier config.")
     elif commande.lower() == 'conf rld':
         ### Récupération config
         newConfigs = Extract_Configs(ConfFilePath)
