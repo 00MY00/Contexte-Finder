@@ -64,6 +64,7 @@ Le projet permet une personnalisation poussée grâce aux paramètres suivants :
 - `MaxVarcharLength`            : Longueur maximale des champs de texte dans Milvus.
 - `MaxReturnResultShowFilsVDB`  : Nombre de fichier a afficher avec la commande "show fvdb"
 - `FullTextBrut`                : Permet de choisir si il faut afficher tous les mots qui ont servi de vecteurs ou non (True, False).
+- `VectorisAll`                 : Si c'est vrai (True), utilise tout le texte du fichier comme vecteur. Si c'est faux (False), récupère un nombre de mots défini à vectoriser 
 
 ## Contribution
 
