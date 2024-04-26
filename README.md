@@ -29,6 +29,7 @@ Pour mettre en place le projet, suivez ces étapes :
     ```bash
     git clone 'https://github.com/00MY00/Contexte-Finder'
     cd '.\Contexte-Finder'
+    
     ```
 3. **Installation de Docker** :
     - Exécutez le script Powershell `Installe_Docker_app.ps1` pour configurer les bases de données nécessaires via Docker.
@@ -36,6 +37,7 @@ Pour mettre en place le projet, suivez ces étapes :
       ```bash
       wget https://github.com/milvus-io/milvus/releases/download/v2.4.0-rc.1/milvus-standalone-docker-compose.yml -O docker-compose.yml
       docker compose up -d
+
       ```
 4. **Configuration initiale** :
     - Vérifiez que `InstallPacketAtStart` dans `Configs.conf` est mis sur `True` pour installer les dépendances nécessaires au premier lancement.
@@ -61,6 +63,7 @@ Le projet permet une personnalisation poussée grâce aux paramètres suivants :
 - `ResumeWordSize`              : Taille minimale des mots à considérer pour le contexte.
 - `MaxVarcharLength`            : Longueur maximale des champs de texte dans Milvus.
 - `MaxReturnResultShowFilsVDB`  : Nombre de fichier a afficher avec la commande "show fvdb"
+- `FullTextBrut`                : Permet de choisir si il faut afficher tous les mots qui ont servi de vecteurs ou non (True, False).
 
 ## Contribution
 
@@ -69,3 +72,5 @@ Les contributions à ce projet sont les bienvenues. Veuillez suivre les bonnes p
 ## Licence
 
 Ce projet est distribué sous licence (LGPL). Voir le fichier `LICENSE` pour plus de détails.
+
+
