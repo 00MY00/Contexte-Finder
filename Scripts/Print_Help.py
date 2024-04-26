@@ -17,6 +17,7 @@ def Print_Help():
         "cls        - Netoy l'affichage.",
         "clear      - Netoy l'affichage.",
         "conf rld   - Recharge les config du fichier config.",
+        "conf       - Ouvre le fichier de config.",
         "show coll  - Affiche les collections de Milvus.",
         "show fvdb  - Affiche les fichiers dans Milvus.",
         "show inf   - Affiche les information et le message de bienvenu du démarage.",
