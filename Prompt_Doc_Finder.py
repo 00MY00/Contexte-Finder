@@ -125,7 +125,6 @@ while True:
         os.system('cls')    # Clear terminal
     elif commande.lower() == 'conf':
         Open_Congigs_File(ConfFilePath)
-        print("Ouverture du fichier config.")
     elif commande.lower() == 'conf rld':
         ### Récupération config
         newConfigs = Extract_Configs(ConfFilePath)
