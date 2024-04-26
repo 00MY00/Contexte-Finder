@@ -5,7 +5,7 @@ def Fiend_Nearst(DistanceMin, DistanceMax, NB_Resultat_Afficher, datas, FullText
     
     FullTextBrut = FullTextBrut.strip()
 
-    print(f"'{FullTextBrut}'")
+    #print(f"'{FullTextBrut}'")
     if FullTextBrut.lower() == "false":
 
         # Convertir la chaîne JSON en dictionnaire si nécessaire
