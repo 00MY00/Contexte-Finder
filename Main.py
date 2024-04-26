@@ -83,7 +83,7 @@ fichiers = os.listdir(RootFilesPath)
 for filepath in fichiers:
     print(filepath)
     langue = Identifi_Langue(RootFilesPath + filepath)
-    context = Extract_Context(RootFilesPath + filepath, int(ResumWordSiz), FeirstContextTriger, int(MaxContextWords))
+    context = Extract_Context(RootFilesPath + filepath, int(ResumWordSiz), FeirstContextTriger, int(MaxContextWords), VectorisAll)
     context = context + ' ' + langue
     #print(context)
     

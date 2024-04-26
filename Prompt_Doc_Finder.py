@@ -149,7 +149,7 @@ while True:
                 VecteurPlusProche = extract_values_from_json(ResultSerch, DBTabls, commande.lower())
             except Exception as e:
                 print(f"Erreur lors de l'extraction des valeurs depuis JSON : {e}")
-                print("ResultSerch ", ResultSerch)
+                #print("ResultSerch ", ResultSerch)
 
             try:
                 DatasJSON = Aggregate_Data_to_JSON_Format(VecteurPlusProche, DBTabls)
