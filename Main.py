@@ -172,7 +172,7 @@ for filepath in fichiers:
 
         print("Output final:", dictionnaire_temporaire)
         VegaModel = Dell_URL(VectorModelFile)
-        Creat_Tables(CollectionName, [dictionnaire_temporaire], MaxVarcharLeng, langue, VegaModel, VectorSize)
+        Creat_Tables(CollectionName, [dictionnaire_temporaire], MaxVarcharLeng, langue, VectorSize)
 
 
 
