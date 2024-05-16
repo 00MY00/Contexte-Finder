@@ -65,35 +65,33 @@ def StartCreat_Tables(VectorModelFile):
     else:
         print("Modèles déjà chargés.")
 
-
-def vectorize_text(text, language, VectorModelFile):
+def vectorize_text(text, language):
     """ Vectorise le texte en utilisant Word2Vec et retourne un vecteur moyen pour le texte entier. """
     words = text.split()
     valid_words = []
     # Vérifier si le modèle pour la langue spécifiée est disponible
-    if language in VectorModelFile:
-        model = VectorModelFile[language]
+    if language in model_w2v:
+        model = model_w2v[language]
         # Itérer sur les mots et vérifier s'ils sont présents dans le modèle
         for word in words:
             if word in model.key_to_index:
                 valid_words.append(word)
             else:
                 # Essayer chaque autre modèle si le mot n'est pas dans le modèle actuel
-                for lang, alt_model in VectorModelFile.items():
+                for lang, alt_model in model_w2v.items():
                     if lang != language and word in alt_model.key_to_index:
                         valid_words.append(word)
                         break
 
     if valid_words:
         # Calculer les vecteurs de mots et le vecteur moyen
-        word_vectors = np.array([VectorModelFile[language][word] for word in valid_words])
+        word_vectors = np.array([model_w2v[language][word] for word in valid_words])
         mean_vector = np.mean(word_vectors, axis=0)
         return mean_vector.tolist()
     # Retourner un vecteur nul si aucun mot n'est disponible
-    return [0] * VectorModelFile[language].vector_size
+    return [0] * model_w2v[language].vector_size
 
-
-def Creat_Tables(collection_name, data, max_varchar_length, language, model_w2v, vector_size):
+def Creat_Tables(collection_name, data, max_varchar_length, language, vector_size):
     connections.connect("default", host="127.0.0.1", port="19530")
 
     if not utility.has_collection(collection_name):
@@ -118,7 +116,7 @@ def Creat_Tables(collection_name, data, max_varchar_length, language, model_w2v,
         for key, value in item.items():
             if key in columns:
                 if "Vecteur" in key:
-                    columns[key].append(vectorize_text(value, language, model_w2v))
+                    columns[key].append(vectorize_text(value, language))
                 else:
                     columns[key].append(value)
 
@@ -127,3 +125,4 @@ def Creat_Tables(collection_name, data, max_varchar_length, language, model_w2v,
         print("Data inserted:", mr.primary_keys)
     except Exception as e:
         print(f"Error inserting data: {e}")
+
