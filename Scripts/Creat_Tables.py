@@ -4,36 +4,96 @@ from pymilvus import Collection, CollectionSchema, FieldSchema, DataType, connec
 import numpy as np
 import logging
 import gensim.downloader as api
+import os
+import urllib.request
+import time
 
 
-# Configuration des niveaux de journalisation pour ignorer les avertissements
-logging.getLogger("transformers").setLevel(logging.ERROR)
-logging.getLogger("gensim").setLevel(logging.ERROR)
+def download_model_file(model_name, url):
+    """Télécharge un fichier de modèle si nécessaire avec une barre de progression."""
+    def progress_callback(block_num, block_size, total_size):
+        downloaded = block_num * block_size
+        percentage = min(100, downloaded * 100 / total_size)
+        print(f"\rTéléchargement de {model_name}: {percentage:.2f}% complet", end='')
+
+    if not os.path.exists(model_name):
+        print(f"Téléchargement du modèle {model_name} depuis {url}")
+        start_time = time.time()
+        urllib.request.urlretrieve(url, model_name, reporthook=progress_callback)
+        end_time = time.time()
+        print(f"\nModèle {model_name} téléchargé avec succès en {end_time - start_time:.2f} secondes.")
+    else:
+        print(f"Modèle {model_name} déjà présent localement.")
+        # Vérification de la taille du fichier
+        downloaded_size = os.path.getsize(model_name)
+        remote_file_info = urllib.request.urlopen(url).info()
+        remote_size = int(remote_file_info['Content-Length'])
+        if downloaded_size != remote_size:
+            print(f"Taille du fichier local ({downloaded_size} octets) ne correspond pas à la taille distante ({remote_size} octets).")
+            user_input = input("Le fichier semble être corrompu. Voulez-vous le supprimer et retélécharger? (oui/non) : ")
+            if user_input.lower() == 'oui':
+                os.remove(model_name)
+                print(f"Fichier {model_name} supprimé. Redémarrage du téléchargement.")
+                download_model_file(model_name, url)
+            else:
+                print("Vous avez choisi de continuer malgré le fichier potentiellement corrompu.")
+        else:
+            print(f"Taille du fichier local correspond à la taille distante. Le fichier {model_name} n'est pas corrompu.")
 
 
-# Vérifie si le modèle est déjà chargé et le charge si nécessaire
-global model_w2v  # Déclare model_w2v comme variable globale
-try:
-    model_w2v
-except NameError:  # Si model_w2v n'est pas défini, le charger
-    from gensim import downloader as api
-    model_w2v = api.load('word2vec-google-news-300')
-    print("Modèle chargé avec succès.")
-else:
-    print("Modèle déjà chargé.")
+def StartCreat_Tables(VectorModelFile):
+    # Configuration des niveaux de journalisation pour ignorer les avertissements
+    logging.getLogger("transformers").setLevel(logging.ERROR)
+    logging.getLogger("gensim").setLevel(logging.ERROR)
+
+    # Convertir la liste plate en une liste de tuples
+    it = iter(VectorModelFile)
+    VectorModelFile = list(zip(it, it))
+
+    # Vérifie si le modèle est déjà chargé et le charge si nécessaire
+    global model_w2v  # Déclare model_w2v comme variable globale
+    if 'model_w2v' not in globals():  # Si model_w2v n'est pas défini, le charger
+        model_w2v = {}
+        for model_name, url in VectorModelFile:
+            download_model_file(model_name, url)
+            print(f"Chargement du modèle '{model_name}'...")
+            start_time = time.time()
+            model = KeyedVectors.load_word2vec_format(model_name, binary=False)
+            end_time = time.time()
+            model_w2v[model_name] = model
+            print(f"Modèle '{model_name}' chargé avec succès en {end_time - start_time:.2f} secondes.")
+    else:
+        print("Modèles déjà chargés.")
 
 
-def vectorize_text(text):
+def vectorize_text(text, language, VectorModelFile):
     """ Vectorise le texte en utilisant Word2Vec et retourne un vecteur moyen pour le texte entier. """
     words = text.split()
-    valid_words = [word for word in words if word in model_w2v.key_to_index]
-    if valid_words:
-        word_vectors = np.array([model_w2v[word] for word in valid_words])
-        vecteur_moyen = np.mean(word_vectors, axis=0)
-        return vecteur_moyen.tolist()
-    return [0] * model_w2v.vector_size
+    valid_words = []
+    # Vérifier si le modèle pour la langue spécifiée est disponible
+    if language in VectorModelFile:
+        model = VectorModelFile[language]
+        # Itérer sur les mots et vérifier s'ils sont présents dans le modèle
+        for word in words:
+            if word in model.key_to_index:
+                valid_words.append(word)
+            else:
+                # Essayer chaque autre modèle si le mot n'est pas dans le modèle actuel
+                for lang, alt_model in VectorModelFile.items():
+                    if lang != language and word in alt_model.key_to_index:
+                        valid_words.append(word)
+                        break
 
-def Creat_Tables(collection_name, data, max_varchar_length=255):
+    if valid_words:
+        # Calculer les vecteurs de mots et le vecteur moyen
+        word_vectors = np.array([VectorModelFile[language][word] for word in valid_words])
+        mean_vector = np.mean(word_vectors, axis=0)
+        return mean_vector.tolist()
+    # Retourner un vecteur nul si aucun mot n'est disponible
+    return [0] * VectorModelFile[language].vector_size
+
+
+def Creat_Tables(collection_name, data, max_varchar_length, language, model_w2v, vector_size):
     connections.connect("default", host="127.0.0.1", port="19530")
 
     if not utility.has_collection(collection_name):
@@ -41,7 +101,7 @@ def Creat_Tables(collection_name, data, max_varchar_length=255):
         fields = [
             FieldSchema(name="ID_Unique", dtype=DataType.INT64, is_primary=True, auto_id=True)
         ] + [
-            FieldSchema(name=key, dtype=DataType.FLOAT_VECTOR, dim=model_w2v.vector_size) if "Vecteur" in key else
+            FieldSchema(name=key, dtype=DataType.FLOAT_VECTOR, dim=vector_size) if "Vecteur" in key else
             FieldSchema(name=key, dtype=DataType.VARCHAR, max_length=max_varchar_length) for key in data[0] if key != "ID_Unique"
         ]
         schema = CollectionSchema(fields, description="Collection for testing")
@@ -58,7 +118,7 @@ def Creat_Tables(collection_name, data, max_varchar_length=255):
         for key, value in item.items():
             if key in columns:
                 if "Vecteur" in key:
-                    columns[key].append(vectorize_text(value))
+                    columns[key].append(vectorize_text(value, language, model_w2v))
                 else:
                     columns[key].append(value)
 
@@ -67,5 +127,3 @@ def Creat_Tables(collection_name, data, max_varchar_length=255):
         print("Data inserted:", mr.primary_keys)
     except Exception as e:
         print(f"Error inserting data: {e}")
-
-

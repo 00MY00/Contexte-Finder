@@ -4,21 +4,24 @@ import numpy as np
 from pymilvus import Collection, connections
 import logging
 
-# Configurer le niveau de log pour ignorer les avertissements
-logging.getLogger().setLevel(logging.ERROR)
 
 
 
-# Vérifie si le modèle est déjà chargé et le charge si nécessaire
-global model_w2v  # Déclare model_w2v comme variable globale
-try:
-    model_w2v
-except NameError:  # Si model_w2v n'est pas défini, le charger
-    from gensim import downloader as api
-    model_w2v = api.load('word2vec-google-news-300')
-    print("Modèle chargé avec succès.")
-else:
-    print("Modèle déjà chargé.")
+def StartCreat_Tables(VectorModelFile):
+    # Configuration des niveaux de journalisation pour ignorer les avertissements
+    logging.getLogger("transformers").setLevel(logging.ERROR)
+    logging.getLogger("gensim").setLevel(logging.ERROR)
+
+    # Vérifie si le modèle est déjà chargé et le charge si nécessaire
+    global model_w2v  # Déclare model_w2v comme variable globale
+    if 'model_w2v' not in globals():  # Si model_w2v n'est pas défini, le charger
+        model_w2v = {}
+        for model_name in VectorModelFile:
+            model = api.load(model_name)
+            model_w2v[model_name] = model
+            print(f"Modèle '{model_name}' chargé avec succès.")
+    else:
+        print("Modèle déjà chargé.")
 
 
 
@@ -26,9 +29,11 @@ def vectorize_word(word):
     """ Vectorise un mot en utilisant Word2Vec et retourne son vecteur. """
     try:
         word_vector = model_w2v[word]
+        print(f"Vecteurs Validé : '{word}'")
     except KeyError:
         # Vecteur nul si le mot n'est pas dans le vocabulaire
         word_vector = np.zeros(model_w2v.vector_size)
+        print(f"Vecteurs Null : '{word}'")
     return word_vector.tolist()
 
 def convert_numpy(obj):
