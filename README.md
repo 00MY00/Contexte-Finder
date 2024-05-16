@@ -65,10 +65,10 @@ Le projet permet une personnalisation poussée grâce aux paramètres suivants :
 - `MaxReturnResultShowFilsVDB`  : Nombre de fichier a afficher avec la commande "show fvdb"
 - `FullTextBrut`                : Permet de choisir si il faut afficher tous les mots qui ont servi de vecteurs ou non (True, False).
 - `VectorisAll`                 : Si c'est vrai (True), utilise tout le texte du fichier comme vecteur. Si c'est faux (False), récupère un nombre de mots défini à vectoriser 
-`VectorModelFile`				# Contien les diferant model de vectorisation a utiliser.
-`MaxLangueTrust`				# Permet de savoir a partire de combien de diferance la langue trouver est just 
-`LanguePourcntValid` 	        # Permet de changer la valeur de langu d'une phrace ci elle est = ou plus grand que le chiffre entrée
-`VectorSize`					# Taye des vecteurs
+- `VectorModelFile`				# Contien les diferant model de vectorisation a utiliser.
+- `MaxLangueTrust`				# Permet de savoir a partire de combien de diferance la langue trouver est just 
+- `LanguePourcntValid` 	        # Permet de changer la valeur de langu d'une phrace ci elle est = ou plus grand que le chiffre entrée
+- `VectorSize`					# Taye des vecteurs
 
 ## Contribution
 
