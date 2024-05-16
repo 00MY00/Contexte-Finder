@@ -30,6 +30,8 @@ def connect_to_milvus():
 import sys
 import os
 import subprocess
+import re
+
 
 os.system('cls')    # Clear terminal
 print('Chargement des Fonctions .  .  .')
@@ -49,6 +51,7 @@ from Extract_Configs import Extract_Configs
 #from Partition_Clee import Partition_Clee
 #from Unique_Id import Unique_Id
 from Convert_And_Matche import Convert_And_Matche
+from Convert_And_Matche import StartCreat_Tables
 from Install_packet import Install_packet
 from Print_Milvus_Collections import Print_Milvus_Collections
 from Print_Files_VDB import Print_Files_VDB
@@ -86,7 +89,11 @@ for cle, valeur in configs.items():
 CollectionName = CollecName
 
 
+###############################
+#Autre paquet a installer qui nesesite les variable automatique
+StartCreat_Tables(VectorModelFile)
 
+###############################
 
 
 ### Installe paquet
@@ -140,6 +147,8 @@ while True:
     else:
         if Find_Collection(CollectionName):
             try:
+                commande = commande.replace("'", " ")
+                commande = re.sub(rf'\b\w{{1,{ResumWordSiz}}}\b', '', commande)
                 ResultSerch = Convert_And_Matche(str(commande), CollectionName, FieldName, NB_vecteur_Proche, int(Precision))
             except Exception as e:
                 print(f"Erreur lors de la conversion et du matching : {e}")

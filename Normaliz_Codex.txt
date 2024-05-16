@@ -1,0 +1,185 @@
+###########################
+#	Codex de convertion   #
+#	et autre pour la      #
+#	normalisation du text #
+###########################
+# 2 parameters
+# Key : New value
+# 3 parameters
+# Lang : Key : value
+
+###########################
+
+# Pays
+fr : France
+de : Allemagne
+es : Espagne
+it : Italie
+uk : Royaume-Uni
+us : États-Unis
+ca : Canada
+jp : Japon
+cn : Chine
+br : Brésil
+ru : Russie
+in : Inde
+au : Australie
+ar : Argentine
+za : Afrique du Sud
+mx : Mexique
+kr : Corée du Sud
+se : Suède
+no : Norvège
+fi : Finlande
+dk : Danemark
+pl : Pologne
+ng : Nigeria
+sa : Arabie Saoudite
+tr : Turquie
+ir : Iran
+eg : Égypte
+id : Indonésie
+my : Malaisie
+sg : Singapour
+th : Thaïlande
+ph : Philippines
+nz : Nouvelle-Zélande
+cl : Chili
+pe : Pérou
+ve : Venezuela
+co : Colombie
+be : Belgique
+nl : Pays-Bas
+pt : Portugal
+at : Autriche
+ch : Suisse
+gr : Grèce
+cz : République Tchèque
+sk : Slovaquie
+hu : Hongrie
+il : Israël
+ae : Émirats Arabes Unis
+qa : Qatar
+kw : Koweït
+
+
+# Devis symbole
+$ : Dollar
+frs : Franc Suisse
+eu : Euro
+£ : Livre Sterling
+¥ : Yen
+₹ : Roupie Indienne
+₽ : Rouble Russe
+kr : Couronne
+R$ : Real Brésilien
+₩ : Won Sud-Coréen
+₺ : Livre Turque
+C$ : Dollar Canadien
+A$ : Dollar Australien
+MX$ : Peso Mexicain
+د.إ : Dirham Émirati
+S$ : Dollar de Singapour
+
+
+
+# Synonime
+fr : ruminer : resasser
+fr : quérir : chercher
+fr : vélocipède : bicyclette
+fr : abscons : obscur
+fr : gredin : vaurien
+fr : opiniâtre : tenace
+fr : ubuesque : grotesque
+fr : fastueux : somptueux
+fr : sibyllin : énigmatique
+fr : virago : femme forte
+fr : ébaubi : étonné
+fr : taciturne : silencieux
+fr : myriade : multitude
+en : elucidate : explain
+en : cadaverous : pale
+en : serendipity : fluke
+en : languid : lethargic
+en : garrulous : talkative
+en : nadir : low point
+en : mellifluous : sweet-sounding
+en : ineffable : unspeakable
+en : limpid : clear
+it : morigerato : modesto
+it : balordo : sciocco
+it : svogliato : indolente
+it : alacre : diligente
+it : dilettante : amatore
+it : ubriaco : intossicato
+it : impavido : coraggioso
+it : vezzoso : affascinante
+it : sontuoso : lusso
+de : verschlimmbessern : verschlechtern
+de : schnickschnack : Tand
+de : zunftig : deftig
+de : kauzig : skurril
+de : mutwillig : absichtlich
+de : frech : unverschämt
+de : gestanden : erfahren
+de : wagemutig : kühn
+de : unerschütterlich : standhaft
+
+
+
+
+# Chiffres
+fr : zéro : 0
+#fr : un : 1
+fr : deux : 2
+fr : trois : 3
+fr : quatre : 4
+fr : cinq : 5
+fr : six : 6
+fr : sept : 7
+fr : huit : 8
+fr : neuf : 9
+fr : dix : 10
+en : zero : 0
+#en : one : 1
+en : two : 2
+en : three : 3
+en : four : 4
+en : five : 5
+en : six : 6
+en : seven : 7
+en : eight : 8
+en : nine : 9
+en : ten : 10
+de : null : 0
+#de : eins : 1
+de : zwei : 2
+de : drei : 3
+de : vier : 4
+de : fünf : 5
+de : sechs : 6
+de : sieben : 7
+de : acht : 8
+de : neun : 9
+de : zehn : 10
+it : zero : 0
+#it : uno : 1
+it : due : 2
+it : tre : 3
+it : quattro : 4
+it : cinque : 5
+it : sei : 6
+it : sette : 7
+it : otto : 8
+it : nove : 9
+it : dieci : 10
+
+
+
+
+
+
+
+
+
+
