@@ -34,7 +34,7 @@ from Creat_Tables import StartCreat_Tables
 from Normaliz_Txt import text_processing
 from Normaliz_Txt import load_model
 from Dell_URL import Dell_URL
-
+from Find_Partial_Match import Find_Partial_Match
 ####################################################################################
 
 
@@ -172,7 +172,9 @@ for filepath in fichiers:
 
         print("Output final:", dictionnaire_temporaire)
         VegaModel = Dell_URL(VectorModelFile)
-        Creat_Tables(CollectionName, [dictionnaire_temporaire], MaxVarcharLeng, langue, VectorSize)
+        Model_langue = Find_Partial_Match(langue, VegaModel)
+        print("Model_langue : ", Model_langue)
+        Creat_Tables(CollectionName, [dictionnaire_temporaire], MaxVarcharLeng, Model_langue, VectorSize)
 
 
 
