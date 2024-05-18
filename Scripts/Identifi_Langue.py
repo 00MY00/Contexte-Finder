@@ -15,10 +15,10 @@ def Identifi_Langue(filepath):
 
     # Calcul des scores pour chaque langue
     scores = {
-        "Français": sum(1 for mot in mots_texte if mot in mots_francais),
-        "Allemand": sum(1 for mot in mots_texte if mot in mots_allemand),
-        "Italien": sum(1 for mot in mots_texte if mot in mots_italien),
-        "Anglais": sum(1 for mot in mots_texte if mot in mots_anglais)
+        "fr": sum(1 for mot in mots_texte if mot in mots_francais),
+        "de": sum(1 for mot in mots_texte if mot in mots_allemand),
+        "it": sum(1 for mot in mots_texte if mot in mots_italien),
+        "en": sum(1 for mot in mots_texte if mot in mots_anglais)
     }
 
     # Détermination de la langue avec le score le plus élevé

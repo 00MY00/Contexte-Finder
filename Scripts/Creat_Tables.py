@@ -8,7 +8,6 @@ import os
 import urllib.request
 import time
 
-
 def download_model_file(model_name, url):
     """Télécharge un fichier de modèle si nécessaire avec une barre de progression."""
     def progress_callback(block_num, block_size, total_size):
@@ -37,9 +36,6 @@ def download_model_file(model_name, url):
                 download_model_file(model_name, url)
             else:
                 print("Vous avez choisi de continuer malgré le fichier potentiellement corrompu.")
-        else:
-            print(f"Taille du fichier local correspond à la taille distante. Le fichier {model_name} n'est pas corrompu.")
-
 
 def StartCreat_Tables(VectorModelFile):
     # Configuration des niveaux de journalisation pour ignorer les avertissements
@@ -66,7 +62,7 @@ def StartCreat_Tables(VectorModelFile):
         print("Modèles déjà chargés.")
 
 def vectorize_text(text, language):
-    """ Vectorise le texte en utilisant Word2Vec et retourne un vecteur moyen pour le texte entier. """
+    """Vectorise le texte en utilisant Word2Vec et retourne un vecteur moyen pour le texte entier."""
     words = text.split()
     valid_words = []
     # Vérifier si le modèle pour la langue spécifiée est disponible
@@ -85,15 +81,15 @@ def vectorize_text(text, language):
 
     if valid_words:
         # Calculer les vecteurs de mots et le vecteur moyen
-        word_vectors = np.array([model_w2v[language][word] for word in valid_words])
+        word_vectors = np.array([model[word] for word in valid_words if word in model.key_to_index])
         mean_vector = np.mean(word_vectors, axis=0)
         return mean_vector.tolist()
     # Retourner un vecteur nul si aucun mot n'est disponible
-    return [0] * model_w2v[language].vector_size
+    return [0] * model.vector_size
 
 def Creat_Tables(collection_name, data, max_varchar_length, language, vector_size):
     connections.connect("default", host="127.0.0.1", port="19530")
-
+ 
     if not utility.has_collection(collection_name):
         # Créez la collection avec un schéma approprié si elle n'existe pas
         fields = [
@@ -125,4 +121,8 @@ def Creat_Tables(collection_name, data, max_varchar_length, language, vector_siz
         print("Data inserted:", mr.primary_keys)
     except Exception as e:
         print(f"Error inserting data: {e}")
+
+
+
+
 
