@@ -183,8 +183,8 @@ print("Indexation . . .")
 print("FieldName : ", FieldName)
 Creat_Index(CollectionName, FieldName, index_params)
     
-os.system('cls')    # Clear terminal
-print("Chargement des données dans la DB vectoriel terminer !")
+#os.system('cls')    # Clear terminal
+print("\nChargement des données dans la DB vectoriel terminer !")
 
 
 

@@ -22,6 +22,7 @@ if (-Not (Test-Path "./docker-compose.yml")) {
     Write-Host "Le fichier docker-compose.yml existe déjà." -ForegroundColor Green
 }
 
+
 # Vérifie si l'application Docker est déjà en cours d'exécution
 try {
     $runningContainers = docker-compose ps -q

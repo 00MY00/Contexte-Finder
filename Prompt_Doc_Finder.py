@@ -31,6 +31,8 @@ import sys
 import os
 import subprocess
 import re
+import socket
+import json
 
 
 os.system('cls')    # Clear terminal
@@ -46,10 +48,11 @@ from Find_Collection import Find_Collection
 #from Creat_Tables import Creat_Tables
 from Extract_Configs import Extract_Configs
 #from Extract_Context import Extract_Context
-#from Identifi_Langue import Identifi_Langue
+from Identifi_Langue import Identifi_Langue
 #from Vectorisation_Text import Vectorisation_Text
 #from Partition_Clee import Partition_Clee
 #from Unique_Id import Unique_Id
+from Find_Partial_Match import Find_Partial_Match
 from Convert_And_Matche import Convert_And_Matche
 from Convert_And_Matche import StartCreat_Tables
 from Install_packet import Install_packet
@@ -61,16 +64,26 @@ from Aggregate_Data_to_JSON_Format import Aggregate_Data_to_JSON_Format
 from Fiend_Nearst import Fiend_Nearst
 from Conf_Updat_Manualy import Conf_Updat_Manualy
 from Open_Congigs_File import Open_Congigs_File
+from Normaliz_Txt import text_processing
+from Dell_URL import Dell_URL
+from Normaliz_Txt import load_model
+
+
 ####################################################################################
 
 # Variable
 RootFilesPath = '.\DOCs\\'
+NormalisePathFile = '.\\Normaliz_Codex.txt'
 ConfFilePath = 'Configs.conf'
 CollectionName = 'test_collection'
 vecteur_defaut = 'null'     # Pour remplire les table vecteur ci il manque
 UserNameLocal = os.getenv('USERNAME')
 script_path = sys.argv[0]       # Récupérer le chemin du script Python actuellement exécuté
-
+# Charger les modèles de langues au début pour éviter de les recharger à chaque appel de la fonction
+nlp_fr = load_model('fr_core_news_sm')
+nlp_de = load_model('de_core_news_sm')
+nlp_en = load_model('en_core_web_sm')
+nlp_it = load_model('it_core_news_sm')
 
 ####################################################################################### Script ########################################################################################
 
@@ -90,8 +103,9 @@ CollectionName = CollecName
 
 
 ###############################
-#Autre paquet a installer qui nesesite les variable automatique
-StartCreat_Tables(VectorModelFile)
+VegaModel = Dell_URL(VectorModelFile)
+
+StartCreat_Tables(VegaModel)        # Importer la langue utiliser par le text entrer qui cera utiliser peu gagnier du temps
 
 ###############################
 
@@ -99,6 +113,11 @@ StartCreat_Tables(VectorModelFile)
 ### Installe paquet
 if InstallPacketAtStart.lower() == 'true':
     Install_packet(Packedg)
+
+
+
+
+
 
 ### Prompt
 os.system('cls')    # Clear terminal
@@ -147,28 +166,38 @@ while True:
     else:
         if Find_Collection(CollectionName):
             try:
+                #Autre paquet a installer qui nesesite les variable automatique
+                
                 commande = commande.replace("'", " ")
-                commande = re.sub(rf'\b\w{{1,{ResumWordSiz}}}\b', '', commande)
-                ResultSerch = Convert_And_Matche(str(commande), CollectionName, FieldName, NB_vecteur_Proche, int(Precision))
+                commande = commande.replace(",", "")
+                phrase = str(commande)
+                
+                langue = Identifi_Langue(commande)
+                
+                VegaModel = Dell_URL(VectorModelFile)
+                
+                Model_langue = Find_Partial_Match(langue, VegaModel)
+                
+                # Variable word inconu !
+                command =  text_processing(phrase, NormalisePathFile)
+                # FieldName : est une liste avec les nom des diferante tables
+                # NB_vecteur_Proche : le nobre de vécteur a récupérer
+                # Precision : définit la pésision pour la recherche de vecteurs
+                ResultSerch = Convert_And_Matche(str(commande), CollectionName, FieldName, NB_vecteur_Proche, int(Precision))   # Récupére les distance les plus procheavec tolérée, et organiser les donnée par table est mis en format JSON
+                #print("Débuuuugggg 8 Value ResultSerch : ", ResultSerch)
+                # with open('Datas.json', 'w') as file:     # Débug
+                #     json.dump(ResultSerch, file, indent=4)     
             except Exception as e:
                 print(f"Erreur lors de la conversion et du matching : {e}")
-
             try:
-                VecteurPlusProche = extract_values_from_json(ResultSerch, DBTabls, commande.lower())
-            except Exception as e:
-                print(f"Erreur lors de l'extraction des valeurs depuis JSON : {e}")
-                #print("ResultSerch ", ResultSerch)
-
-            try:
-                DatasJSON = Aggregate_Data_to_JSON_Format(VecteurPlusProche, DBTabls)
-            except Exception as e:
-                print(f"Erreur lors de l'agrégation des données au format JSON : {e}")
-
-            try:
-                ResultDistanceCheque = Fiend_Nearst(int(DistanceMin), int(DistanceMax), int(NB_Resultat_Afficher), DatasJSON, FullTextBrut)
+                # DistanceMin : la distance minimale entre les vecteurs des mot trouver et de ceux chercher
+                # DistanceMax : la distance maximal séparent les vecteur des mot trouver et de ceux chercher
+                # NB_Resultat_Afficher : le nombre de résulta a afficher parmis les plus pertinent
+                # ResultSerch : les donnée JSON dans les quel se trouve les données a tréter
+                # FullTextBrut : est un booléin permetent de savoir ci oui il faut afficher tous les mot véctoriser dans Milvus relier au fichier ou non 
+                ResultDistanceCheque = Fiend_Nearst(int(DistanceMin), int(DistanceMax), int(NB_Resultat_Afficher), ResultSerch, FullTextBrut, DBTabls)     # Récupère le nombre de vecteur / fichier les plus proche est affiche les résultat!
+                #print("filtered_results : ",ResultDistanceCheque)
             except Exception as e:
                 print(f"Erreur lors de la recherche des distances proches : {e}")
 
-            
-            #print(ResultDistanceCheque)
 
