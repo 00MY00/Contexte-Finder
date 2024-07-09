@@ -40,7 +40,7 @@ def load_model(language_code):
 
 
 
-# Charger les modèles de langues au début pour éviter de les recharger à chaque appel de la fonction
+# # Charger les modèles de langues au début pour éviter de les recharger à chaque appel de la fonction
 nlp_fr = load_model('fr_core_news_sm')
 nlp_de = load_model('de_core_news_sm')
 nlp_en = load_model('en_core_web_sm')
@@ -317,9 +317,11 @@ def text_processing(text, filepath):
     
     processed_words = []
 
+    
+
     # Correction orthographique
     spell = SpellChecker()
-    text = spell.correction(text) if spell.correction(text) else word 
+    text = spell.correction(text) if spell.correction(text) else str(text) 
 
 
     # Déterminer la langue principale du texte complet

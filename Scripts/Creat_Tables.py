@@ -8,6 +8,8 @@ import os
 import urllib.request
 import time
 
+
+
 def download_model_file(model_name, url):
     """Télécharge un fichier de modèle si nécessaire avec une barre de progression."""
     def progress_callback(block_num, block_size, total_size):
@@ -37,6 +39,8 @@ def download_model_file(model_name, url):
             else:
                 print("Vous avez choisi de continuer malgré le fichier potentiellement corrompu.")
 
+
+
 def StartCreat_Tables(VectorModelFile):
     # Configuration des niveaux de journalisation pour ignorer les avertissements
     logging.getLogger("transformers").setLevel(logging.ERROR)
@@ -60,6 +64,18 @@ def StartCreat_Tables(VectorModelFile):
             print(f"Modèle '{model_name}' chargé avec succès en {end_time - start_time:.2f} secondes.")
     else:
         print("Modèles déjà chargés.")
+
+
+
+
+
+
+
+
+
+
+
+
 
 def vectorize_text(text, language):
     """Vectorise le texte en utilisant Word2Vec et retourne un vecteur moyen pour le texte entier."""

@@ -1,4 +1,8 @@
 import re
+import os
+
+
+# Suporte un chemin ou du texte directement
 
 def Identifi_Langue(filepath):
     mots_francais = {"le", "la", "et", "vous", "je", "suis", "les"}
@@ -6,9 +10,13 @@ def Identifi_Langue(filepath):
     mots_italien = {"il", "la", "e", "tu", "io", "sono", "gli"}
     mots_anglais = {"the", "and", "you", "i", "are", "is", "of"}
 
-    # Lire le contenu du fichier
-    with open(filepath, 'r', encoding='utf-8') as file:
-        texte = file.read()
+    # Vérifier si filepath est un chemin de fichier valide
+    if os.path.isfile(filepath):
+        with open(filepath, 'r', encoding='utf-8') as file:
+            texte = file.read()
+    else:
+        # Sinon, considérer filepath comme étant le texte
+        texte = filepath
 
     # Préparation du texte pour la comparaison
     mots_texte = set(re.sub(r'[^\w\s]', '', texte).lower().split())
@@ -27,6 +35,3 @@ def Identifi_Langue(filepath):
     return langue_max_score if scores[langue_max_score] > 0 else "Inconnue"
 
 
-# Example
-#config = Identifi_Langue('..\DOCs\Biographie_Fictive_Marie_Lefebvre.txt')   # Détecte la langue du fichier
-#print(config)
