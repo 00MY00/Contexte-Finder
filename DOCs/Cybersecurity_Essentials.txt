@@ -1,0 +1,2 @@
+Cybersecurity Essentials:
+Cybersecurity involves protecting computer systems, networks, and data from digital attacks, unauthorized access, and damage. Essential practices include using strong passwords, regularly updating software, and employing firewalls and antivirus programs.

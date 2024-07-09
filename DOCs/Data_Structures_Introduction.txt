@@ -1,0 +1,2 @@
+Data Structures Introduction:
+Data structures are ways to organize and store data to enable efficient access and modification. Common data structures include arrays, linked lists, stacks, queues, trees, and graphs. They are fundamental in designing efficient algorithms.

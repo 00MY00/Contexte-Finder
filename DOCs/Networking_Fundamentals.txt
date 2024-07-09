@@ -1,0 +1,2 @@
+Networking Fundamentals:
+Computer networking involves the interconnection of computers and other devices to share resources. Key concepts include IP addressing, subnetting, protocols like TCP/IP, and hardware components such as routers, switches, and modems.

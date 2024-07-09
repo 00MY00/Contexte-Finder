@@ -1,0 +1,2 @@
+Machine Learning Overview:
+Machine learning is a branch of artificial intelligence focused on building applications that learn from data and improve their accuracy over time without being programmed to do so. It involves algorithms like linear regression, decision trees, and neural networks.
