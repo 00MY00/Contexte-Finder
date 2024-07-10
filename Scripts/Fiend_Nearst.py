@@ -53,7 +53,7 @@ def Fiend_Nearst(DistanceMin, DistanceMax, NB_Resultat_Afficher, ResultSerch, Fu
         merged_entry = entries[0]
         merged_entry['Occurrences'] = document_counter[doc_name]
         # Si FullTextBrut est False, remplacer Txt_Brute par 'False'
-        if not FullTextBrut:
+        if not str(FullTextBrut) == 'True':
             merged_entry['Txt_Brute'] = 'False'
         merged_results[doc_name] = merged_entry
 
